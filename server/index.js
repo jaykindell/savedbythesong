@@ -5,7 +5,7 @@ var items = require('../database-mongo');
 
 var app = express();
 
-UNCOMMENT FOR ANGULAR
+//UNCOMMENT FOR ANGULAR
 app.use(express.static(__dirname + '/../angular-client'));
 app.use(express.static(__dirname + '/../node_modules'));
 
