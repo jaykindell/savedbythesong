@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
-const configs = require('../config')
+// const configs = require('../config')
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 const database = require('../database-mongo/index');
 

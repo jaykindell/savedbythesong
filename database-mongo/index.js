@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var configs = require('../config');
+// var configs = require('../config');
 // mongoose.connect('mongodb://localhost/test');
 
 let MONGO_URI = process.env.MONGO_URI;
