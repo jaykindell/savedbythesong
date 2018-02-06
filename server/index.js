@@ -7,11 +7,16 @@ const database = require('../database-mongo/index');
 
 const app = express();
 
+const TOKEN = process.env.TOKEN || configs.GENIUS_TOKEN;
+
 app.use(bodyParser.json());
 
+// UNCOMMENT FOR REACT
+app.use(express.static(__dirname + '/../react-client/dist'));
+
 //UNCOMMENT FOR ANGULAR
-app.use(express.static(__dirname + '/../angular-client'));
-app.use(express.static(__dirname + '/../node_modules'));
+// app.use(express.static(__dirname + '/../angular-client'));
+// app.use(express.static(__dirname + '/../node_modules'));
 
 // helpers //////////////////////////////////////////////////////////////////////////
 const searchGenius = (term, cb) => {
@@ -22,7 +27,7 @@ const searchGenius = (term, cb) => {
     headers:
       {
         'Cache-Control': 'no-cache',
-        Authorization: `Bearer ${configs.GENIUS_TOKEN}`
+        Authorization: `Bearer ${TOKEN}`
       }
   };
 
@@ -44,23 +49,25 @@ app.post('/songs', function (req, res) {
   searchGenius(query, (body) => {
     let songlist = JSON.parse(body);
     
-
+    console.log('query', query);// kk
+    
     let dbEntries = songlist.response.hits.map((song) => {
       // pull out // name, artist, url, api path into new object  
       return song = {
-          songName: song.result.title,
-          artist: song.result.primary_artist.name,
-          lyricsUrl: song.result.url,
-          apiPath: song.result.api_path
-        };
+        songName: song.result.title,
+        artist: song.result.primary_artist.name,
+        lyricsUrl: song.result.url,
+        apiPath: song.result.api_path
+      };
     });
     // console.log('db entries', dbEntries);
     const matches = [];
+    let queryy = query.toLowerCase();
     if (dbEntries.length) {
       console.log('selecting');
       for (let i = 0; i < dbEntries.length; i++) {
         let quarry = dbEntries[i].songName.toLowerCase();
-        if (query === quarry){
+        if (queryy === quarry){
           matches.push(dbEntries[i]);
         }
       }
