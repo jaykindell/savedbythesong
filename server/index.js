@@ -7,7 +7,7 @@ const database = require('../database-mongo/index');
 
 const app = express();
 
-const TOKEN = process.env.TOKEN || configs.GENIUS_TOKEN;
+const TOKEN = process.env.TOKEN;
 
 app.use(bodyParser.json());
 

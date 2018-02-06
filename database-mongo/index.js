@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var configs = require('../config');
 // mongoose.connect('mongodb://localhost/test');
 
-let MONGO_URI = process.env.MONGO_URI || configs.MONGO_URI;
+let MONGO_URI = process.env.MONGO_URI;
 mongoose.connect(MONGO_URI);
 
 var db = mongoose.connection;
