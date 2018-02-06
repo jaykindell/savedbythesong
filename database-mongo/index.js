@@ -11,15 +11,17 @@ db.once('open', function() {
   console.log('mongoose connected successfully');
 });
 
-var itemSchema = mongoose.Schema({
-  quantity: Number,
-  description: String
+var songSchema = mongoose.Schema({
+  songName: String,
+  artist: String,
+  lyricsUrl: String,
+  apiPath: String
 });
 
-var Item = mongoose.model('Item', itemSchema);
+const Song = mongoose.model('Song', songSchema);
 
-var selectAll = function(callback) {
-  Item.find({}, function(err, items) {
+const selectAll = function(callback) {
+  Song.find({}, function(err, items) {
     if(err) {
       callback(err, null);
     } else {
@@ -28,4 +30,34 @@ var selectAll = function(callback) {
   });
 };
 
+const save = (songs, query, cb) => {
+  // TODO: Your code here
+  // This function should save a repo or repos to
+  // the MongoDB
+
+
+
+  Song.find({ songName: query }, function (err, docs) {
+    if (docs.length > 0) {
+      Song.updateMany(songs, function (error, docs) {
+        if (error) {
+          cb(error)
+        }
+        cb(null, docs)
+      });
+    } else {
+      Song.insertMany(songs, function (error, doc) {
+        if (error) {
+          cb(error)
+        }
+        cb(null, doc)
+      });
+    }
+  })
+}
+
+const retrieve = Song.find({});
+
 module.exports.selectAll = selectAll;
+module.exports.save = save;
+module.exports.retrieve = retrieve;
