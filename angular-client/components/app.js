@@ -1,11 +1,10 @@
 angular.module('app')
-.controller('AppCtrl', function(itemsService) {
-  itemsService.getAll((data) => {
-    this.items = data;
-  });
-})
 .component('app', {
+  templateUrl: '/templates/app.html',
+  controller: function(itemsService) {
+    itemsService.getAll((data) => {
+      this.items = data;
+    })
+  },
   bindings: {},
-  controller: 'AppCtrl',
-  templateUrl: '/templates/app.html'
 });

@@ -83,7 +83,7 @@ app.post('/songs', function (req, res) {
   });
 });
 app.get('/songs', function (req, res) {
-  database.selectAll(function(err, data) {
+  database.retrieve.exec(function(err, data) {
     if(err) {
       res.sendStatus(500);
     } else {
